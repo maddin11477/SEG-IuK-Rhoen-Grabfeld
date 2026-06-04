@@ -1,0 +1,337 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="de" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Lageübersicht</title>
+<style type="text/css">html,
+body {
+  font-family: Segoe UI;
+  font-size: 13px;
+}
+
+h1 {
+  font-family: Segoe UI Light, Segoe UI;
+  font-size: 24pt;
+  font-weight: 300;
+  margin: 5px;
+}
+
+h2 {
+  font-family: Segoe UI Light, Segoe UI;
+  font-size: 20pt;
+  font-weight: 300;
+  margin-bottom: 0px;
+}
+
+h3 {
+  font-family: Segoe UI Light, Segoe UI;
+  font-size: 18pt;
+  font-weight: 300;
+}
+
+h4 {
+  font-family: Segoe UI;
+  font-size: 16pt;
+  font-weight: 300;
+}
+
+h4 {
+  font-family: Segoe UI;
+  font-size: 14pt;
+  font-weight: 500;
+}
+
+
+
+a {
+ padding: 5px;
+  color:#3399FF;
+ text-decoration: none;
+}
+
+a:hover {
+ text-decoration: none;
+}
+
+
+table
+{	
+border-collapse: collapse;
+width:100%;
+ border: 1px solid #ddd;
+}
+
+.bordered td{
+ border: 1px solid #ddd;
+ padding: 5px;
+}
+
+td {
+border-bottom: 1px solid #ddd;
+padding: 5px;
+}
+
+th {
+border-bottom: 1px solid black;
+padding: 5px;
+text-align: left;
+font-family: Segoe UI Light;
+font-size: 14px;
+font-weight: 300;
+color: #0061C1;
+background: #FBFBFB;
+}
+
+.bordered th {
+ border: 1px solid #ddd;
+padding: 5px;
+text-align: left;
+}
+
+.noborder th,.noborder td {
+ border: 0px;
+padding: 5px;
+text-align: left;
+}
+
+
+</style>
+</head>
+
+<body>
+<h1>Einsatzbericht MANV</h1>
+
+
+
+<table style="width: 100%">
+	{sql}SELECT * FROM EINSAETZE WHERE EINSATZNUMMER = <%EINSATZNUMMER%>|
+	<tr>
+		<td  style="width: 33%"><b>Einsatznummer</b></td>
+		<td >%EINSATZNUMMER%</td>
+	</tr>
+	<tr>
+		<td  style="width: 33%"><b>Einsatzer&ouml;ffnung</b></td>
+		<td >%EROEFF%</td>
+	</tr>
+	<tr>
+		<td  style="width: 33%">&nbsp;</td>
+		<td >&nbsp;</td>
+	</tr>
+	<tr>
+		<td  style="width: 33%"><b>Ort / Ortsteil</b></td>
+		<td >%ORT% %ORTSTEIL%</td>
+	</tr>
+	<tr>
+		<td  style="width: 33%"><b>Stra&szlig;e / Nr.</b></td>
+		<td >%STRASSE% %HAUSNUMMER%</td>
+	</tr>
+	<tr>
+		<td  style="width: 33%; height: 25px"><b>Objekt</b></td>
+		<td  style="height: 25px">%OBJEKTNAME%</td>
+	</tr>
+	<tr>
+		<td  style="width: 33%">&nbsp;</td>
+		<td >&nbsp;</td>
+	</tr>
+	<tr>
+		<td  style="width: 33%"><b>Stichwort</b></td>
+		<td >%STICHWORT_KLARTEXT%</td>
+	</tr>
+{if}"%SCHLAGWORT%"<>""{then}
+	<tr>
+		<td  style="width: 33%"><b>Meldebild</b></td>
+		<td>%SCHLAGWORT%</td>
+	</tr>{endif}
+	<tr>
+		<td  style="width: 33%"><b>Meldung</b></td>
+		<td >%MELDUNG%</td>
+	</tr>
+{if}"%BEMERKUNG%"<>""{then}
+	<tr>
+		<td  style="width: 33%"><b>Bemerkung</b></td>
+		<td>%BEMERKUNG%</td>
+	</tr>{endif}
+	{/sql}
+</table>
+
+<h2>Übersicht Kräfte</h2>
+
+<table style="width: 100%" cellspacing="1" class="table bordered">
+	<tr>
+		<th class="text-left">Zugführer</th>
+		<th class="text-left">Gruppenführer</th>
+		<th class="text-left">Einsatzkräfte</th>
+		<th class="text-left">Gesamt</th>
+	</tr>
+	<tr>
+		<td style="width: 25%"><%KRAEFTE_1%></td>
+                <td style="width: 25%"><%KRAEFTE_2%></td>
+                <td style="width: 25%"><%KRAEFTE_3%></td>
+                <td style="width: 25%; font-weight: bold"><%KRAEFTE%></td>
+	</tr>
+</table>
+
+<h2>Übersicht Fahrzeuge</h2>
+
+<table style="width: 100%" cellspacing="1" class="table bordered">
+	<tr>
+		<th class="text-left">RTW</th>
+		<th class="text-left">KTW</th>
+		<th class="text-left">NEF</th>
+		<th class="text-left">RTH</th>
+		<th class="text-left">Sonstige</th>
+                <th class="text-left">Summe</th>
+	</tr>
+	<tr>
+		<td style="width: 20%"><%COUNT_RTW%></td>
+                <td style="width: 20%"><%COUNT_KTW%></td>
+                <td style="width: 20%"><%COUNT_NEF%></td>
+                <td style="width: 20%"><%COUNT_RTH%></td>
+                <td style="width: 20%"><%COUNT_Sonstige%></td>
+                <td style="width: 20%; font-weight: bold"><%EMinEinsatz%></td>
+	</tr>
+</table>
+
+<h2>Übersicht Patienten</h2>
+
+<table style="width: 100%" cellspacing="1" class="table bordered">
+	<tr>
+		<th class="text-left">KAT 1</th>
+		<th class="text-left">KAT 2</th>
+		<th class="text-left">KAT 3</th>
+		<th class="text-left">Verstorben</th>
+                <th class="text-left">Betroffen</th>
+		<th class="text-left">Ungesichtet</th>
+	        <th class="text-left">Summe</th>
+        </tr>
+	<tr>
+		<td style="width: 20%; background:#FF7D7D"><%COUNT_Rot%></td>
+                <td style="width: 20%; background:#FFFF9B"><%COUNT_Gelb%></td>
+                <td style="width: 20%; background:#9FFF9F"><%COUNT_Gruen%></td>
+                <td style="width: 20%; background:#8AC5FF"><%COUNT_Schwarz%></td>
+                <td style="width: 20%; background:#D4D4D4"><%COUNT_Betroffen%></td>
+                <td style="width: 20%; background:#FFFFFF"><%COUNT_Weiss%></td>
+	        <td style="width: 20%; font-weight: bold"><%COUNT_Patienten%></td>
+        </tr>
+</table>
+
+<h2>Einsatzabschnitte</h2>
+
+<table style="width: 100%;  page-break-after: always;" cellspacing="1" class="table bordered">
+	<tr>
+		<th class="text-left">Art</th>
+		<th class="text-left">Einsatzabschnitt</th>
+		<th class="text-left">EAL</th>
+		<th class="text-left">Rufname EA</th>
+                <th class="text-left">Gruppe</th>
+                <th class="text-left">Stärke</th>
+	</tr>
+        {sql}SELECT ID, Bezeichnung, EAL, Kanal, Rufname, PARENT FROM EINSATZABSCHNITTE WHERE EINSATZNUMMER LIKE '<%EINSATZNUMMER%>'|
+	<tr>
+		<td style="width: 5%; height: 34px;" valign="top"><b>{if}"%PARENT%"<>"-1"{then}UEA{endif} {if}"%PARENT%"=="-1"{then}EA{endif}</b></td>
+		<td style="width: 30%; height: 34px;" valign="top">%Bezeichnung%</td>
+		<td style="width: 25%; height: 34px;" valign="top">%EAL%</td>
+                <td style="width: 20%; height: 34px;" valign="top">%Rufname%</td>
+                <td style="width: 10%; height: 34px;" valign="top">%Kanal%</td>
+                <td style="width: 20%; height: 34px;" valign="top">
+                 {innersql}SELECT SUM(EM_EINSAETZE.BESATZUNG_1) as ZF, SUM(EM_EINSAETZE.BESATZUNG_2) as GF, SUM(EM_EINSAETZE.BESATZUNG_3) as EK, SUM(EM_EINSAETZE.BESATZUNG_GES) as Total FROM EINSATZABSCHNITT_VERLAUF JOIN EM_EINSAETZE on EM_EINSAETZE.RUFNAME = EINSATZABSCHNITT_VERLAUF.RUFNAME  
+WHERE (EINSATZABSCHNITT_VERLAUF.ABSCHNITT_IN = %ID% AND EM_EINSAETZE.EINSATZNUMMER='<%EINSATZNUMMER%>')|%ZF%/%GF%/%EK%/<b>%Total%</b>{/innersql}</td>
+	</tr>
+	{/sql}
+</table>
+
+<h2>Einsatztagebuch</h2>
+
+<table style="width: 100%" cellspacing="1">
+	<tr>
+		<th class="text-left">Nr.</th>
+		<th class="text-left">Eingetragen</th>
+		<th class="text-left">Eintrag</th>
+	</tr>
+	{sql}SELECT ADD_TIMESTAMP,VERLAUFID,VON,AN,TYP,EINTRAG,ABSCHNITT FROM EINSATZVERLAUF WHERE EINSATZNUMMER LIKE '<%EINSATZNUMMER%>' ORDER BY ID DESC LIMIT 5|
+	<tr>
+		<td style="width: 10%; height: 34px;" valign="top"><b>%VERLAUFID%</b></td>
+		<td style="width: 25%; height: 34px;" valign="top">%ADD_TIMESTAMP%</td>
+		<td style="width: 65%; height: 34px;" valign="top"><span class="auto-style7">%TYP%</span><br class="auto-style6"><i class="fg-darkRed">
+		<span class="auto-style6">{if}"%VON%"<>""{then}von: %VON%{endif}{if}"%AN%"<>""{then} an: %AN%{endif}{if}"%VON%%AN%"<>""{then}</span><br class="auto-style6">
+		<span class="auto-style6">{endif}</span></i><span class="auto-style6">%EINTRAG%</span></td>
+	</tr>
+	{/sql}
+</table>
+
+
+<h2>Patientenliste</h2>
+<table class="table bordered">
+	<tr>   
+      <th class="text-left">Nr.</th>	
+      <th class="text-left">Name / Vorname</th>
+	  <th class="text-left">Geschlecht</th>
+      <th class="text-left">Geb. Datum</th>
+      <th class="text-left">Verletzungen</th>
+      <th class="text-left">Fundort</th>
+      <th class="text-left">Kind</th>
+      <th class="text-left">EM</th>
+	  <th class="text-left">Ziel</th>
+    </tr>
+
+    
+      {sql}SELECT patienten.*,patienten.em as RUFNAME FROM PATIENTEN  WHERE patienten.einsatznummer= '<%EINSATZNUMMER%>' ORDER BY patienten.PATNUMMER,patienten.ID|
+         	<tr>  
+	  <td class="text-left" 
+	  {if}"%SICHTUNGSKATEGORIE%"=="Rot"{then} style="background:#FF7D7D"{endif}
+	  {if}"%SICHTUNGSKATEGORIE%"=="Gelb"{then} style="background:#FFFF9B"{endif}
+	  {if}"%SICHTUNGSKATEGORIE%"=="Grün"{then} style="background:#9FFF9F"{endif}
+	  {if}"%SICHTUNGSKATEGORIE%"=="Tot"{then} style="background:#949494"{endif}
+	  {if}"%SICHTUNGSKATEGORIE%"=="Blau"{then} style="background:#8AC5FF"{endif}><b>%PATNUMMER%</b></td>			
+      <td class="text-left">%NAME%, %VORNAME%</td>
+      <td class="text-left">%GESCHLECHT%</td>
+	  <td class="text-left">%GEBDATUM%</td>
+      <td class="text-left">%VERLETZUNG%</td>
+      <td class="text-left">%KOMMENTAR%</td>
+      <td class="text-left">{if}"%Ist_Kind%"=="1"{then} &#10003; {endif} {if}"%Ist_Kind%"<>"1"{then} {endif}</td>
+      <td class="text-left">%RUFNAME%</td>
+      <td class="text-left">%ZIELORT%</td>
+    </tr>
+{/sql}
+</table>
+
+<p><b><span style="color: #C40000">Rot: </span><%COUNT_Rot%> | 
+<span style="color: #E8E800">Gelb: </span><%COUNT_Gelb%> | 
+<span style="color: #00D900">Grün: </span><%COUNT_Gruen%> | 
+Tot: <%COUNT_Schwarz%> |
+<span style="color: #D4D4D4">Betroffen: </span><%COUNT_Betroffen%> | 
+<span style="color: #D4D4D4">Ungesichtet: </span><%COUNT_Weiss%>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Gesamt:<%COUNT_Patienten%></b></p>
+
+<h2>Einsatzmittel</h2>
+
+<table style="width: 100%" cellspacing="1" class="table bordered">
+	<tr>
+		<th class="text-left">Rufname</th>
+		<th class="text-left">Aus</th>
+		<th class="text-left">An</th>
+		<th class="text-left">Ab</th>
+		<th class="text-left">Ziel</th>
+		<th class="text-left">Frei</th>
+		<th class="text-left">Wache</th>
+		<th class="text-left">St&auml;rke</th>
+	</tr>
+	{sql}SELECT RUFNAME,CAST(STATUS1 AS TIME) AS STATUS1,CAST(STATUS2 AS TIME) AS STATUS2, CAST(STATUS3 AS TIME) AS STATUS3, CAST(STATUS4 AS TIME) AS STATUS4,CAST(STATUS5 AS TIME) AS STATUS5,CAST(STATUS6 AS TIME) AS STATUS6,BESATZUNG_1,BESATZUNG_2,BESATZUNG_3,BESATZUNG_3,BESATZUNG_GES FROM EM_EINSAETZE WHERE EINSATZNUMMER LIKE '<%EINSATZNUMMER%>' ORDER BY RUFNAME|
+	<tr>
+		<td style="width: 20%">%RUFNAME%</td>
+		<td style="width: 8%">%STATUS1%</td>
+		<td style="width: 8%">%STATUS2%</td>
+		<td style="width: 8%">%STATUS3%</td>
+		<td style="width: 8%">%STATUS4%</td>
+		<td style="width: 8%">%STATUS5%</td>
+		<td style="width: 8%">%STATUS6%</td>
+		<td>%BESATZUNG_1% / %BESATZUNG_2% / %BESATZUNG_3% = %BESATZUNG_GES%</td>
+	</tr>
+	{/sql}
+</table>
+
+</body>
+
+</html>
