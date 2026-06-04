@@ -1,0 +1,302 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<titel>EDP Einsatzbericht</title>
+<meta content="de" http-equiv="Content-Language" />
+<style type="text/css">html,
+body {
+  font-family: Segoe UI;
+  font-size: 13px;
+}
+
+h1 {
+  font-family: Segoe UI Light, Segoe UI;
+  font-size: 24pt;
+  font-weight: 300;
+  margin: 5px;
+}
+
+h2 {
+  font-family: Segoe UI Light, Segoe UI;
+  font-size: 20pt;
+  font-weight: 300;
+  margin-bottom: 0px;
+}
+
+h3 {
+  font-family: Segoe UI Light, Segoe UI;
+  font-size: 18pt;
+  font-weight: 300;
+}
+
+h4 {
+  font-family: Segoe UI;
+  font-size: 16pt;
+  font-weight: 300;
+}
+
+h4 {
+  font-family: Segoe UI;
+  font-size: 14pt;
+  font-weight: 500;
+}
+
+
+
+a {
+ padding: 5px;
+  color:#3399FF;
+ text-decoration: none;
+}
+
+a:hover {
+ text-decoration: none;
+}
+
+
+table
+{	
+border-collapse: collapse;
+width:100%;
+ border: 1px solid #ddd;
+}
+
+.bordered td{
+ border: 1px solid #ddd;
+ padding: 5px;
+}
+
+td {
+border-bottom: 1px solid #ddd;
+padding: 5px;
+}
+
+th {
+border-bottom: 1px solid black;
+padding: 5px;
+text-align: left;
+font-family: Segoe UI Light;
+font-size: 14px;
+font-weight: 300;
+color: #0061C1;
+background: #FBFBFB;
+}
+
+.bordered th {
+ border: 1px solid #ddd;
+padding: 5px;
+text-align: left;
+}
+
+.noborder th,.noborder td {
+ border: 0px;
+padding: 5px;
+text-align: left;
+}
+
+
+</style>
+</head>
+
+<body>
+<h1>Einsatzbericht</h1>
+
+
+
+<table style="width: 100%">
+	{sql}SELECT * FROM EINSAETZE WHERE EINSATZNUMMER = <%EINSATZNUMMER%>|
+	<tr>
+		<td  style="width: 33%"><b>Einsatznummer</b></td>
+		<td >%EINSATZNUMMER%</td>
+	</tr>
+	<tr>
+		<td  style="width: 33%"><b>Einsatzer&ouml;ffnung</b></td>
+		<td >%EROEFF%</td>
+	</tr>
+	<tr>
+		<td  style="width: 33%">&nbsp;</td>
+		<td >&nbsp;</td>
+	</tr>
+	<tr>
+		<td  style="width: 33%"><b>Ort / Ortsteil</b></td>
+		<td >%ORT% %ORTSTEIL%</td>
+	</tr>
+	<tr>
+		<td  style="width: 33%"><b>Stra&szlig;e / Nr.</b></td>
+		<td >%STRASSE% %HAUSNUMMER%</td>
+	</tr>
+	<tr>
+		<td  style="width: 33%; height: 25px"><b>Objekt</b></td>
+		<td  style="height: 25px">%OBJEKTNAME%</td>
+	</tr>
+	<tr>
+		<td  style="width: 33%">&nbsp;</td>
+		<td >&nbsp;</td>
+	</tr>
+	<tr>
+		<td  style="width: 33%"><b>Stichwort</b></td>
+		<td >%EINSATZART% - %STICHWORT_KLARTEXT%</td>
+	</tr>
+{if}"%SCHLAGWORT%"<>""{then}
+	<tr>
+		<td  style="width: 33%"><b>Meldebild</b></td>
+		<td>%SCHLAGWORT%</td>
+	</tr>{endif}
+	<tr>
+		<td  style="width: 33%"><b>Meldung</b></td>
+		<td >%MELDUNG%</td>
+	</tr>
+{if}"%BEMERKUNG%"<>""{then}
+	<tr>
+		<td  style="width: 33%"><b>Bemerkung</b></td>
+		<td>%BEMERKUNG%</td>
+	</tr>{endif}
+	{/sql}
+</table>
+{sql}SELECT * FROM EINSAETZE WHERE EINSATZNUMMER = <%EINSATZNUMMER%>|
+
+{if}"%ZORT%"<>""{then}
+<h2>Zielort</h2>
+<table style="width: 100%">
+	
+	<tr>
+		<td  style="width: 33%"><b>Ort / Ortsteil</b></td>
+		<td >%ZORT% %ZORTSTEIL%</td>
+	</tr>
+	<tr>
+		<td  style="width: 33%"><b>Stra&szlig;e / Nr.</b></td>
+		<td >%ZSTRASSE% %ZHAUSNUMMER%</td>
+	</tr>
+	<tr>
+		<td  style="width: 33%; height: 25px"><b>Objekt</b></td>
+		<td  style="height: 25px">%ZOBJEKTNAME%</td>
+	</tr>
+
+	{/sql}
+</table>
+{endif}
+
+   {sql}SELECT COUNT(ID) FROM PATIENTEN WHERE EINSATZNUMMER LIKE <%EINSATZNUMMER%>|
+	 
+{if}"%COUNT%"<>"0"{then}
+<h2>Patienten</h2>
+<table class="table bordered">
+	<tr>   
+      <th class="text-left">Nr.</th>	
+      <th class="text-left">Name / Vorname</th>
+	  <th class="text-left">Geschlecht</th>
+      <th class="text-left">Geb. Datum</th>
+      <th class="text-left">EM</th>
+	  <th class="text-left">Ziel</th>
+    </tr>{endif}{/sql}
+
+    
+      {sql}SELECT patienten.* FROM PATIENTEN  WHERE patienten.einsatznummer LIKE '<%EINSATZNUMMER%>' ORDER BY patienten.PATNUMMER,patienten.ID|
+         	<tr>  
+	  <td class="text-left" 
+	  {if}"%SICHTUNGSKATEGORIE%"=="Rot"{then} style="background:#FF7D7D"{endif}
+	  {if}"%SICHTUNGSKATEGORIE%"=="Gelb"{then} style="background:#FFFF9B"{endif}
+	  {if}"%SICHTUNGSKATEGORIE%"=="Grün"{then} style="background:#9FFF9F"{endif}
+	  {if}"%SICHTUNGSKATEGORIE%"=="Tot"{then} style="background:#949494"{endif}
+	  {if}"%SICHTUNGSKATEGORIE%"=="Blau"{then} style="background:#8AC5FF"{endif}><b>%PATNUMMER%</b></td>			
+      <td class="text-left">%NAME%, %VORNAME%</td>
+      <td class="text-left">%GESCHLECHT%</td>
+	  <td class="text-left">%GEBDATUM%</td>
+      <td class="text-left">%EM% %EM2%</td>
+      <td class="text-left">%ZIELORT%</td>
+    </tr>
+{/sql}
+</table>
+
+
+<h2>Einsatzmittel</h2>
+
+<table style="width: 100%" cellspacing="1" class="table bordered">
+	<tr>
+		<th class="text-left">Rufname</th>
+		<th class="text-left">Disponiert</th>
+		<th class="text-left">Status 3</th>
+		<th class="text-left">Status 4</th>
+		<th class="text-left">Status 7 </th>
+		<th class="text-left">Status 8</th>
+		<th class="text-left">Status 1</th>
+		<th class="text-left">Status 2</th>
+		<th class="text-left">St&auml;rke</th>
+	</tr>
+		{sql}SELECT RUFNAME,CAST(DISPONIERT AS TIME) AS DISPONIERT,CAST(STATUS1 AS TIME) AS STATUS1,CAST(STATUS2 AS TIME) AS STATUS2, CAST(STATUS3 AS TIME) AS STATUS3, CAST(STATUS4 AS TIME) AS STATUS4,CAST(STATUS5 AS TIME) AS STATUS5,CAST(STATUS6 AS TIME) AS STATUS6,BESATZUNG_1,BESATZUNG_2,BESATZUNG_3,BESATZUNG_3,BESATZUNG_GES FROM EM_EINSAETZE WHERE EINSATZNUMMER = '<%EINSATZNUMMER%>' ORDER BY RUFNAME|
+	<tr>
+		<td style="width: 19%">%RUFNAME%</td>
+		<td style="width: 9%">%DISPONIERT%</td>
+		<td style="width: 9%">%STATUS1%</td>
+		<td style="width: 9%">%STATUS2%</td>
+		<td style="width: 9%">%STATUS3%</td>
+		<td style="width: 9%">%STATUS4%</td>
+		<td style="width: 9%">%STATUS5%</td>
+		<td style="width: 9%">%STATUS6%</td>
+		<td style="width: 9%">%BESATZUNG_1% / %BESATZUNG_2% / %BESATZUNG_3% = %BESATZUNG_GES%</td>
+	</tr>
+	{/sql}
+	
+</table>
+<p class="auto-style3"><b>Gesamtstärke:</b> {sql}SELECT SUM(BESATZUNG_GES) FROM EM_EINSAETZE WHERE EINSATZNUMMER = <%EINSATZNUMMER%>{/sql}</p>
+
+<h2>Rückmeldungen</h2>
+<table style="width: 100%" cellspacing="1">
+	<tr>
+		<th class="text-left">Datum / Zeit</th>
+		<th class="text-left">EM</th>
+		<th class="text-left">Meldung</th>
+	</tr>
+	</tr>
+	<caption class="auto-style3">{sql}SELECT ADD_TIME,MELDENDER,MELDUNG,MELDEWEG FROM RUECKMELDUNGEN WHERE EINSATZNUMMER = '<%EINSATZNUMMER%>' ORDER BY ADD_TIME DESC|
+	<tr>
+		<td class="auto-style8" style="width: 20%; height: 34px;" valign="top">%ADD_TIME%</td>
+		<td class="auto-style8" style="width: 15%; height: 34px;" valign="top">%MELDENDER% %MELDEWEG%</td>
+		<td class="auto-style8" style="width: 65%; height: 34px;" valign="top">%MELDUNG%</td>
+	</tr>
+	<caption class="auto-style3">{/sql}
+</table>
+
+
+
+<h2>Maßnahmen</h2>
+<table style="width: 100%" cellspacing="1">
+	<tr>
+		<th class="text-left">Datum / Zeit</th>
+		<th class="text-left">Maßnahme</th>
+	</tr>
+	<caption class="auto-style3">{sql}SELECT ADD_TIME,ADD_USER,EINTRAG FROM MASSNAHMEN WHERE EINSATZNUMMER = '<%EINSATZNUMMER%>' ORDER BY ADD_TIME DESC|
+	<tr>
+		<td class="auto-style8" style="width: 20%; height: 34px;" valign="top">%ADD_TIME%</td>
+		<td class="auto-style8" style="width: 65%; height: 34px;" valign="top">%EINTRAG%</td>
+	</tr>
+	<caption class="auto-style3">{/sql}
+</table>
+
+{sql}SELECT COUNT(VERLAUFID) FROM EINSATZVERLAUF WHERE EINSATZNUMMER = <%EINSATZNUMMER%>|
+
+{if}"%COUNT%"<>"0"{then}
+<h2>Einsatztagebuch</h2>
+<table style="width: 100%" cellspacing="1">
+	<tr>
+		<th class="text-left">Nr.</th>
+		<th class="text-left">Eingetragen</th>
+		<th class="text-left">Eintrag</th>
+	</tr>{endif}{/sql}
+	
+	{sql}SELECT ADD_TIMESTAMP,ADD_USER,VERLAUFID,VON,AN,TYP,EINTRAG,ABSCHNITT FROM EINSATZVERLAUF WHERE EINSATZNUMMER = '<%EINSATZNUMMER%>' ORDER BY ID|
+	<tr>
+		<td style="width: 10%; height: 34px;" valign="top"><b>%VERLAUFID%</b></td>
+		<td style="width: 25%; height: 34px;" valign="top">%ADD_TIMESTAMP%<br><small>%ADD_USER%</small></td>
+		<td style="width: 65%; height: 34px;" valign="top"><span class="auto-style7">%TYP%</span><br class="auto-style6"><i class="fg-darkRed">
+		<span class="auto-style6">{if}"%VON%"<>""{then}von: %VON%{endif}{if}"%AN%"<>""{then} an: %AN%{endif}{if}"%VON%%AN%"<>""{then}</span><br class="auto-style6">
+		<span class="auto-style6">{endif}</span></i><span class="auto-style6">%EINTRAG%</span></td>
+	</tr>
+	{/sql}
+</table>
+
+
+</body>
+
+</html>
