@@ -1,0 +1,115 @@
+<div class="card-body px-0 p-1 border-top">
+   <table class="table table-border table-striped">
+<th>EAL</th>
+<th>TZ</th>
+<th>RTW</th>
+<th>KTW</th>
+<th>NEF</th>
+<th>RTH</th>
+<th>Sonstige</th>
+       <sql query="SELECT ID,EAL,KANAL,RUFNAME,BEZEICHNUNG, TAKTZEICHEN FROM EINSATZABSCHNITTE EA
+            INNER JOIN 
+            EINSAETZE E 
+            ON 
+            EA.EINSATZNUMMER = E.EINSATZNUMMER 
+            WHERE 
+            E.STATUS IN ('Erfasst', 'Disponiert', 'Alarmiert', 'Beendet')">
+       <tr>
+         <td class="text-start" style="width: 100px">%BEZEICHNUNG%</td>
+         <td>
+           <img class="taktzeichen me-0 px-1" src="/%taktzeichen%" alt="%bezeichnung%" style="max-height: 44px;">
+         </td>
+         <td>
+            <div class="card shadow mb-1 ms-1 flex-grow-1">
+                <div class="card-body p-1 pb-0 text-center">
+                    <innersql query="select sum(a) AS SUM FROM(select COUNT(*) as a from einsatzmittel em where em.Abschnitt=%ID% and em.TYP = 'RTW' union all select re.ANZAHL as a  from ressourcen_einsatz re where re.ABSCHNITT_ID=%ID% and re.BEZEICHNUNG = 'RTW')x">
+                       <h5><span class="badge position-absolute top-0 end-0 bg-primary mt-1 me-1">%SUM%</span>   </h5>        
+                    </innersql>
+                    <img class="taktzeichen me-0 px-1" src="/EDPTZ_PGZhaHJ6ZXVnIGJnY29sb3I9IndoaXRlIiBpY29uYmlnPSJmemdfcmV0dHVuZyIgdGV4dF9mdW5rdGlvbl9memc9IlJUVyIgZnp0eXA9ImxhbmQiLz4=" alt="RTW" style="max-height: 44px">   
+                    <h5 class="card-title text-nowrap">
+                        <innersql query="select sum(a) AS SUM FROM(select COUNT(*) as a from einsatzmittel em where em.Abschnitt=%ID% and em.TYP = 'RTW' and em.STATUS <> 3)x">
+                           <b>%SUM%</b>
+                        </innersql>
+                        <innersql query="select sum(a) AS SUM FROM(select COUNT(*) as a from einsatzmittel em where em.Abschnitt=%ID% and em.TYP = 'RTW' and em.STATUS = 3 union all select re.ANZAHL as a  from ressourcen_einsatz re where re.ABSCHNITT_ID=%ID% and re.BEZEICHNUNG = 'RTW')x">
+                           +(%SUM%)
+                        </innersql>
+                    </h5>
+                </div>
+            </div>
+         </td>
+          <td>
+            <div class="card shadow mb-1 ms-1 flex-grow-1">
+                <div class="card-body p-1 pb-0 text-center">
+                    <innersql query="select sum(a) AS SUM FROM(select COUNT(*) as a from einsatzmittel em where em.Abschnitt=%ID% and em.TYP = 'KTW' and em.STATUS = 3 union all select re.ANZAHL as a  from ressourcen_einsatz re where re.ABSCHNITT_ID=%ID% and re.BEZEICHNUNG = 'KTW')x">
+                       <h5><span class="badge position-absolute top-0 end-0 bg-primary mt-1 me-1">%SUM%</span></h5>           
+                    </innersql>
+                    <img class="taktzeichen me-0 px-1" src="/EDPTZ_PGZhaHJ6ZXVnIGJnY29sb3I9IndoaXRlIiBpY29uYmlnPSJmemdfcmV0dHVuZyIgdGV4dF9mdW5rdGlvbl9memc9IktUVyIgZnp0eXA9ImxhbmQiLz4==" alt="KTW" style="max-height: 44px">   
+                    <h5 class="card-title text-nowrap">
+                        <innersql query="select sum(a) AS SUM FROM(select COUNT(*) as a from einsatzmittel em where em.Abschnitt=%ID% and em.TYP = 'KTW' and em.STATUS <> 3)x">
+                           <b>%SUM%</b>
+                        </innersql>
+                        <innersql query="select sum(a) AS SUM FROM(select COUNT(*) as a from einsatzmittel em where em.Abschnitt=%ID% and em.TYP = 'KTW' and em.STATUS = 3 union all select re.ANZAHL as a  from ressourcen_einsatz re where re.ABSCHNITT_ID=%ID% and re.BEZEICHNUNG = 'KTW')x">
+                           +(%SUM%)
+                        </innersql>
+                    </h5>
+                </div>
+            </div>
+         </td>
+          <td>
+           <div class="card shadow mb-1 ms-1 flex-grow-1">
+                <div class="card-body p-1 pb-0 text-center">
+                    <innersql query="select sum(a) AS SUM FROM(select COUNT(*) as a from einsatzmittel em where em.Abschnitt=%ID% and em.TYP = 'NEF' and em.STATUS = 3 union all select re.ANZAHL as a  from ressourcen_einsatz re where re.ABSCHNITT_ID=%ID% and re.BEZEICHNUNG = 'NEF')x">
+                       <h5><span class="badge position-absolute top-0 end-0 bg-primary mt-1 me-1">%SUM%</span></h5>           
+                    </innersql>
+                    <img class="taktzeichen me-0 px-1" src="/EDPTZ_PGZhaHJ6ZXVnIGJnY29sb3I9IndoaXRlIiBpY29uYmlnPSJmemdfcmV0dHVuZ25hIiB0ZXh0X2Z1bmt0aW9uX2Z6Zz0iTkVGIiBmenR5cD0ibGFuZCIvPg==" alt="NEF" style="max-height: 44px">   
+                    <h5 class="card-title text-nowrap">
+                        <innersql query="select sum(a) AS SUM FROM(select COUNT(*) as a from einsatzmittel em where em.Abschnitt=%ID% and em.TYP = 'NEF' and em.STATUS <> 3)x">
+                           <b>%SUM%</b>
+                        </innersql>
+                        <innersql query="select sum(a) AS SUM FROM(select COUNT(*) as a from einsatzmittel em where em.Abschnitt=%ID% and em.TYP = 'NEF' and em.STATUS = 3 union all select re.ANZAHL as a  from ressourcen_einsatz re where re.ABSCHNITT_ID=%ID% and re.BEZEICHNUNG = 'NEF')x">
+                           +(%SUM%)
+                        </innersql>
+                    </h5>
+                </div>
+            </div>
+         </td>
+          <td>
+              <div class="card shadow mb-1 ms-1 flex-grow-1">
+                <div class="card-body p-1 pb-0 text-center">
+                    <innersql query="select sum(a) AS SUM FROM(select COUNT(*) as a from einsatzmittel em where em.Abschnitt=%ID% and em.TYP = 'RTH' and em.STATUS = 3 union all select re.ANZAHL as a  from ressourcen_einsatz re where re.ABSCHNITT_ID=%ID% and re.BEZEICHNUNG = 'RTH')x">
+                       <h5><span class="badge position-absolute top-0 end-0 bg-primary mt-1 me-1">%SUM%</span></h5>           
+                    </innersql>
+                    <img class="taktzeichen me-0 px-1" src="/EDPTZ_PGh1YnNjaHJhdWJlciBmZ2NvbG9yPSJibGFjayIgYmdjb2xvcj0id2hpdGUiPg==" alt="RTH" style="max-height: 44px">   
+                    <h5 class="card-title text-nowrap">
+                        <innersql query="select sum(a) AS SUM FROM(select COUNT(*) as a from einsatzmittel em where em.Abschnitt=%ID% and em.TYP = 'RTH' and em.STATUS <> 3)x">
+                           <b>%SUM%</b>
+                        </innersql>
+                        <innersql query="select sum(a) AS SUM FROM(select COUNT(*) as a from einsatzmittel em where em.Abschnitt=%ID% and em.TYP = 'RTH' and em.STATUS = 3 union all select re.ANZAHL as a  from ressourcen_einsatz re where re.ABSCHNITT_ID=%ID% and re.BEZEICHNUNG = 'RTH')x">
+                           +(%SUM%)
+                        </innersql>
+                    </h5>
+                </div>
+            </div>
+         </td> 
+         <td>
+            <div class="card shadow mb-1 ms-1 flex-grow-1">
+                <div class="card-body p-1 pb-0 text-center">
+                    <innersql query="select sum(a) AS SUM FROM(select COUNT(*) as a from einsatzmittel em where em.Abschnitt=%ID% and (em.TYP <> 'KTW' AND em.TYP <> 'KTW‐B' AND em.TYP <> 'RTW' AND em.TYP <> 'RTH' AND em.TYP <> 'NEF'))x">
+                       <h5><span class="badge position-absolute top-0 end-0 bg-primary mt-1 me-1">%SUM%</span></h5>           
+                    </innersql>
+                    <img class="taktzeichen me-0 px-1" src="/EDPTZ_PGVpbmhlaXQgdGV4dD0iU29uc3QiIGZnY29sb3I9IiMwMDAwMDAiIGJnY29sb3I9IiNmZmZmZmYiIGZvbnRzaXplPSI1NSI+" alt="Sonstige" style="max-height: 44px">   
+                    <h5 class="card-title text-nowrap">
+                        <innersql query="select sum(a) AS SUM FROM(select COUNT(*) as a from einsatzmittel em where em.Abschnitt=%ID% and (em.TYP <> 'KTW' AND em.TYP <> 'KTW‐B' AND em.TYP <> 'RTW' AND em.TYP <> 'RTH' AND em.TYP <> 'NEF') and em.STATUS <> 3)x">
+                           <b>%SUM%</b>
+                        </innersql>
+                        <innersql query="select sum(a) AS SUM FROM(select COUNT(*) as a from einsatzmittel em where em.Abschnitt=%ID% and (em.TYP <> 'KTW' AND em.TYP <> 'KTW‐B' AND em.TYP <> 'RTW' AND em.TYP <> 'RTH' AND em.TYP <> 'NEF') and em.STATUS = 3 union all select re.ANZAHL as a  from ressourcen_einsatz re where re.ABSCHNITT_ID=%ID% and (re.BEZEICHNUNG <> 'KTW' AND re.BEZEICHNUNG <> 'KTW‐B' AND re.BEZEICHNUNG <> 'RTW' AND re.BEZEICHNUNG <> 'RTH' AND re.BEZEICHNUNG <> 'NEF'))x">
+                           +(%SUM%)
+                        </innersql>
+                    </h5>
+                </div>
+            </div>
+         </td>
+         </tr>
+       </sql>
+   </table>
+</div>
