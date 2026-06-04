@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<meta content="de" http-equiv="Content-Language" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<title>Patientenübersicht</title>
+<style type="text/css">html,
+body {
+  font-family: Segoe UI;
+  font-size: 13px;
+}
+
+h1 {
+  font-family: Segoe UI Light, Segoe UI;
+  font-size: 24pt;
+  font-weight: 300;
+  margin: 5px;
+}
+
+h2 {
+  font-family: Segoe UI Light, Segoe UI;
+  font-size: 20pt;
+  font-weight: 300;
+  margin-bottom: 0px;
+}
+
+h3 {
+  font-family: Segoe UI Light, Segoe UI;
+  font-size: 18pt;
+  font-weight: 300;
+}
+
+h4 {
+  font-family: Segoe UI;
+  font-size: 16pt;
+  font-weight: 300;
+}
+
+h4 {
+  font-family: Segoe UI;
+  font-size: 14pt;
+  font-weight: 500;
+}
+
+
+
+a {
+ padding: 5px;
+  color:#3399FF;
+ text-decoration: none;
+}
+
+a:hover {
+ text-decoration: none;
+}
+
+
+table
+{	
+border-collapse: collapse;
+width:100%;
+ border: 1px solid #ddd;
+}
+
+.bordered td{
+ border: 1px solid #ddd;
+ padding: 5px;
+}
+
+td {
+border-bottom: 1px solid #ddd;
+padding: 5px;
+}
+
+th {
+border-bottom: 1px solid black;
+padding: 5px;
+text-align: left;
+font-family: Segoe UI Light;
+font-size: 14px;
+font-weight: 300;
+color: #0061C1;
+background: #FBFBFB;
+}
+
+.bordered th {
+ border: 1px solid #ddd;
+padding: 5px;
+text-align: left;
+}
+
+.noborder th,.noborder td {
+ border: 0px;
+padding: 5px;
+text-align: left;
+}
+
+
+</style>
+
+</head>
+
+<body>
+<h1>Einsatzbericht Sandienst</h1>
+
+<h2>Zusammenfassung</h2>
+<table class="table bordered">
+<tr>   
+      <th class="text-left">Behandelt</th>
+      <th class="text-left">Transportiert</th>
+</tr>
+<tr>  
+      <td class="text-left">
+{sql}SELECT COUNT(*) FROM PATIENTEN WHERE PATIENTEN.ADDTIME BETWEEN '<%BEGINN%>' and '<%ENDE%>' AND PATIENTEN.IST_ENTLASSEN = 1;{/sql}
+     </td>
+      <td class="text-left">
+{sql}SELECT COUNT(*) FROM PATIENTEN WHERE PATIENTEN.ADDTIME BETWEEN '<%BEGINN%>' and '<%ENDE%>' AND PATIENTEN.IST_ENTLASSEN = 0;{/sql}
+     </td>
+</tr>
+</table>
+
+<h2>Patientenliste</h2>
+<table class="table bordered">
+	<tr>   
+      <th class="text-left">Einsatz</th>
+      <th class="text-left">Erfasst</th>
+      <th class="text-left">Nr.</th>	
+      <th class="text-left">Name / Vorname</th>
+	  <th class="text-left">Geschlecht</th>
+      <th class="text-left">Alter</th>
+      <th class="text-left">Verletzungen</th>
+      <th class="text-left">Fundort</th>
+      <th class="text-left">Kind</th>
+      <th class="text-left">Einheit</th>
+      <th class="text-left">Ziel</th>
+      <th class="text-left">Entlassen</th>
+    </tr>
+
+    
+      {sql}SELECT PATIENTEN.*, patienten.em as RUFNAME from PATIENTEN WHERE PATIENTEN.ADDTIME BETWEEN ' <%BEGINN%>' AND '<%ENDE%>' order by PATIENTEN.UHS_PATNUMMER asc |
+         	<tr>  
+          <td class="text-left">%EINSATZNUMMER%</td>
+          <td class="text-left">%ADDTIME%</td>
+	  <td class="text-left" 
+	  {if}"%SICHTUNGSKATEGORIE%"=="Rot"{then} style="background:#FF7D7D"{endif}
+	  {if}"%SICHTUNGSKATEGORIE%"=="Gelb"{then} style="background:#FFFF9B"{endif}
+	  {if}"%SICHTUNGSKATEGORIE%"=="Grün"{then} style="background:#9FFF9F"{endif}
+	  {if}"%SICHTUNGSKATEGORIE%"=="Tot"{then} style="background:#949494"{endif}
+	  {if}"%SICHTUNGSKATEGORIE%"=="Blau"{then} style="background:#8AC5FF"{endif}><b>%UHS_PATNUMMER%</b></td>			
+      <td class="text-left">%NAME%, </br> %VORNAME%</td>
+      <td class="text-left">%GESCHLECHT%</td>
+	  <td class="text-left">%PAT_ALTER%</td>
+      <td class="text-left">%VERLETZUNG%</td>
+      <td class="text-left">%KOMMENTAR%</td>
+      <td class="text-left">{if}"%Ist_Kind%"=="1"{then}<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAMAAADDpiTIAAAAD1BMVEVMaXEAAAAAAAAAAAAAAACF6eB8AAAABHRSTlMAvw1ydjSx6gAAAAlwSFlzAAALEwAACxMBAJqcGAAABypJREFUeNrt2wty20gMQEFT1P3PvLV2KnZsWaLE+QCD7hPM4EEkk+y+vQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR12fdt267X63Xbtn2/zD4PI1329/RfbXagihv17UAdl/16hxVY3d387ysw+4R0dNke9b9eNw+BZT38+XsILO1gfxuwqMP9vQaWdOD1/2UDZp+W1p7qbwOW82R/3wGLebq/DVjKC/2vVx+Cy3ipv8+AZbzW30tgFa/29xJYw+v9PQJWcKK/R8ACTvX3CEjvXH9/EMjuZH/vgORO9/cOSO18f++AzBr09w5IrEl/74C02vS3AFk16u8jIKlW/S1ATs36W4CU2vW/Xmffhee17G8B8mna3wKk07a/BcimcX8fgck07m8Bkmnd3wLk0ry/vwpOpX1/C5BJh/7+OTiRHv19AuTRo783QB5d+nsDpNGnvzdAFn36ewNk0am/N0ASvfp7AOTQq78HQA7d+nsApNCtvz8CpNCtvxdACv36ewFkoH9t/fr7AMigY38fAAnoX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V/aRf/S9P8Yw75v2/sotm3b90QnP3tx/f+v/2MKW5Ed0P9W/To7oP9lv3eJ1VdA//3RPfbZJ+ypfP8jA8hxk27XX7r/w5//2g8B/Y9eZ80NqN7/mftvsw87+f7V+6+4AdX7P/vvHzkudZz+T19r9ombKt//8PdftosdU77/Zd2rHbp+9f4v/gcQq7wF9H/hBZDpeg/o/9ILINMF79++fP+XHwBLvAX0P/EASHTJXy+v/5kHQKZr3qT/29tbmYv+pP/pB0Cqq36n/1uT/wki65eg/u+KXfeT/h9jqHbhvxfX/93pT4CPK8++xtP0/6PNAiS7tP6fWg0i17X1/6vZJDJdXP9PFa+u/xcFL6//12HUu77+/0yj7QBmX+fIjfX/R7UR6P9NsSHo/13rgcQeg/4/NJ9I5EHo/1OjvwpOMQr9b2i/AGGHof/NqZQZh/63VRmI/r/oMpd4I9H/Nx0+AgIORf/fVRiL/nf0eQSEGoz+d6ez/Gj0v6/XeKIMR/9HA1p7PPo/1OkrIMaA9J85o/kj0v/QlJYdkv7HdHsJTB6T/ketOSj9j1txVPrXHtaCVzKuyhcysMrXMbLKlzG0ylcxtsoXGW2RwS1yjRmWGN0Sl5hlgeEtcIWZ0o8v/QVmSz7A5MePIPUIUx8+isRDTHz0SNKOMe3Bo0k6yKTHjijlKFMeOqqEw0x45MjSjTPdgaNLNtBkx80g1UhTHTaLRENNdNRM0ow1zUGzSTLYJMfMKMVoUxwyqwTDTXDEzMKPN/wBsws+4ODHW0HoEYc+3CoCDznw0VYSdsxhD7aaoIMOeqwVhRx1yEOtKuCwAx5pZeHGHe5Aqws28GDHqSDUyEMdpopAQw90lErCjD3MQaoJMvggx6goxOhDHKKqAMMPcITKpo9/+gGqmxxA/+mmJtA/gIkR9A9hWgb9g5gUQv8wpqTQP5AJMfQPZXgO/YMZHET/cIYm0T+ggVH0D2lYFv2DGhRG/7CGpNE/sAFx9A+tex79g+scSP/wuibSP4GekfTPoOMG6J9Cvg3Qv61sG6B/a7k2QP/2Mm2A/j3k2QD9+8iyAfr3kmMD9O8nwwbo31P8DdC/r+gboH9vsTdA//4ib4D+I8TdAP3HiLoB+o8ScwP0HyfiBug/UrwN0H+saBug/2ixNkD/8SJtgP4zxNkA/eeIsgH6zxJjA/SfJ8IG6D/T/A3Qf67ZG6D/bHM3QP/5Zm6A/hHM2wD9Y5i1AfpHMWcD9I9jxgboH8n4DdA/ltEboH80YzdA/3hGboD+EY3bAP1jGrUB+kc1ZgP0j2vEBugfWf8N0D+23hugf3R9N0D/+HpugP4Z9NsA/XPotQH6Z9FnA/TPo8cG6J9J+w3QP5fWG6B/Nm03QP98Wm6A/hm12wD9c2q1Afpn1WYD9M+rxQbon9n5DdA/t7MboH925zZA//zObID+K3h9A/Rfw6sboP8qXtsA/dfxygbov5LnN0D/tTy7Afqv5rkN0H89z2yA/is6vgH77KPSx65/cUceAh7/K7s8fAj4+S/u/kNg9/Nf3+9PAfmr2G88BjYP/1Iu+779WYNt2/32q7ooDwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAf8BRxpNOR67GRgAAAAASUVORK5CYII=" width="32" height="32"/> {endif} {if}"%Ist_Kind%"<>"1"{then} {endif}</td>
+      <td class="text-left">%EM% </br> %EM2%</td>
+      <td class="text-left">%ZIELORT%</td>
+      <td class="text-left">{if}"%Ist_Entlassen%"=="1"{then} <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAgAAAAIACAMAAADDpiTIAAAAD1BMVEVMaXEAAAAAAAAAAAAAAACF6eB8AAAABHRSTlMAvw1ydjSx6gAAAAlwSFlzAAALEwAACxMBAJqcGAAABypJREFUeNrt2wty20gMQEFT1P3PvLV2KnZsWaLE+QCD7hPM4EEkk+y+vQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR12fdt267X63Xbtn2/zD4PI1329/RfbXagihv17UAdl/16hxVY3d387ysw+4R0dNke9b9eNw+BZT38+XsILO1gfxuwqMP9vQaWdOD1/2UDZp+W1p7qbwOW82R/3wGLebq/DVjKC/2vVx+Cy3ipv8+AZbzW30tgFa/29xJYw+v9PQJWcKK/R8ACTvX3CEjvXH9/EMjuZH/vgORO9/cOSO18f++AzBr09w5IrEl/74C02vS3AFk16u8jIKlW/S1ATs36W4CU2vW/Xmffhee17G8B8mna3wKk07a/BcimcX8fgck07m8Bkmnd3wLk0ry/vwpOpX1/C5BJh/7+OTiRHv19AuTRo783QB5d+nsDpNGnvzdAFn36ewNk0am/N0ASvfp7AOTQq78HQA7d+nsApNCtvz8CpNCtvxdACv36ewFkoH9t/fr7AMigY38fAAnoX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V+b/rXpX5v+telfm/616V/aRf/S9P8Yw75v2/sotm3b90QnP3tx/f+v/2MKW5Ed0P9W/To7oP9lv3eJ1VdA//3RPfbZJ+ypfP8jA8hxk27XX7r/w5//2g8B/Y9eZ80NqN7/mftvsw87+f7V+6+4AdX7P/vvHzkudZz+T19r9ombKt//8PdftosdU77/Zd2rHbp+9f4v/gcQq7wF9H/hBZDpeg/o/9ILINMF79++fP+XHwBLvAX0P/EASHTJXy+v/5kHQKZr3qT/29tbmYv+pP/pB0Cqq36n/1uT/wki65eg/u+KXfeT/h9jqHbhvxfX/93pT4CPK8++xtP0/6PNAiS7tP6fWg0i17X1/6vZJDJdXP9PFa+u/xcFL6//12HUu77+/0yj7QBmX+fIjfX/R7UR6P9NsSHo/13rgcQeg/4/NJ9I5EHo/1OjvwpOMQr9b2i/AGGHof/NqZQZh/63VRmI/r/oMpd4I9H/Nx0+AgIORf/fVRiL/nf0eQSEGoz+d6ez/Gj0v6/XeKIMR/9HA1p7PPo/1OkrIMaA9J85o/kj0v/QlJYdkv7HdHsJTB6T/ketOSj9j1txVPrXHtaCVzKuyhcysMrXMbLKlzG0ylcxtsoXGW2RwS1yjRmWGN0Sl5hlgeEtcIWZ0o8v/QVmSz7A5MePIPUIUx8+isRDTHz0SNKOMe3Bo0k6yKTHjijlKFMeOqqEw0x45MjSjTPdgaNLNtBkx80g1UhTHTaLRENNdNRM0ow1zUGzSTLYJMfMKMVoUxwyqwTDTXDEzMKPN/wBsws+4ODHW0HoEYc+3CoCDznw0VYSdsxhD7aaoIMOeqwVhRx1yEOtKuCwAx5pZeHGHe5Aqws28GDHqSDUyEMdpopAQw90lErCjD3MQaoJMvggx6goxOhDHKKqAMMPcITKpo9/+gGqmxxA/+mmJtA/gIkR9A9hWgb9g5gUQv8wpqTQP5AJMfQPZXgO/YMZHET/cIYm0T+ggVH0D2lYFv2DGhRG/7CGpNE/sAFx9A+tex79g+scSP/wuibSP4GekfTPoOMG6J9Cvg3Qv61sG6B/a7k2QP/2Mm2A/j3k2QD9+8iyAfr3kmMD9O8nwwbo31P8DdC/r+gboH9vsTdA//4ib4D+I8TdAP3HiLoB+o8ScwP0HyfiBug/UrwN0H+saBug/2ixNkD/8SJtgP4zxNkA/eeIsgH6zxJjA/SfJ8IG6D/T/A3Qf67ZG6D/bHM3QP/5Zm6A/hHM2wD9Y5i1AfpHMWcD9I9jxgboH8n4DdA/ltEboH80YzdA/3hGboD+EY3bAP1jGrUB+kc1ZgP0j2vEBugfWf8N0D+23hugf3R9N0D/+HpugP4Z9NsA/XPotQH6Z9FnA/TPo8cG6J9J+w3QP5fWG6B/Nm03QP98Wm6A/hm12wD9c2q1Afpn1WYD9M+rxQbon9n5DdA/t7MboH925zZA//zObID+K3h9A/Rfw6sboP8qXtsA/dfxygbov5LnN0D/tTy7Afqv5rkN0H89z2yA/is6vgH77KPSx65/cUceAh7/K7s8fAj4+S/u/kNg9/Nf3+9PAfmr2G88BjYP/1Iu+779WYNt2/32q7ooDwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADAAf8BRxpNOR67GRgAAAAASUVORK5CYII=" width="32" height="32"/> {endif} {if}"%Ist_Entlassen%"<>"1"{then}  {endif}</td>
+    </tr>
+{/sql}
+</table>
+
+<p><b>
+<span style="color: #C40000">Rot: </span>
+{sql}SELECT COUNT(*) FROM PATIENTEN JOIN EINSAETZE ON PATIENTEN.EINSATZNUMMER = EINSAETZE.EINSATZNUMMER WHERE EINSAETZE.EROEFF BETWEEN '<%BEGINN%>' and '<%ENDE%>' AND SICHTUNGSKATEGORIE LIKE 'Rot'; {/sql}| 
+<span style="color: #E8E800">Gelb: </span>
+{sql}SELECT COUNT(*) FROM PATIENTEN JOIN EINSAETZE ON PATIENTEN.EINSATZNUMMER = EINSAETZE.EINSATZNUMMER WHERE EINSAETZE.EROEFF BETWEEN '<%BEGINN%>' and '<%ENDE%>' AND SICHTUNGSKATEGORIE LIKE 'Gelb'; {/sql}| 
+<span style="color: #00D900">Grün: </span>
+{sql}SELECT COUNT(*) FROM PATIENTEN JOIN EINSAETZE ON PATIENTEN.EINSATZNUMMER = EINSAETZE.EINSATZNUMMER WHERE EINSAETZE.EROEFF BETWEEN '<%BEGINN%>' and '<%ENDE%>' AND SICHTUNGSKATEGORIE LIKE 'Grün'; {/sql}| 
+Tot: 
+{sql}SELECT COUNT(*) FROM PATIENTEN JOIN EINSAETZE ON PATIENTEN.EINSATZNUMMER = EINSAETZE.EINSATZNUMMER WHERE EINSAETZE.EROEFF BETWEEN '<%BEGINN%>' and '<%ENDE%>' AND SICHTUNGSKATEGORIE LIKE 'Schwarz'; {/sql}| 
+<span style="color: #D4D4D4">Betroffen: </span>
+{sql}SELECT COUNT(*) FROM PATIENTEN JOIN EINSAETZE ON PATIENTEN.EINSATZNUMMER = EINSAETZE.EINSATZNUMMER WHERE EINSAETZE.EROEFF BETWEEN '<%BEGINN%>' and '<%ENDE%>' AND SICHTUNGSKATEGORIE LIKE 'Unverletzt'; {/sql}| 
+<span style="color: #D4D4D4">Ungesichtet: </span>
+{sql}SELECT COUNT(*) FROM PATIENTEN JOIN EINSAETZE ON PATIENTEN.EINSATZNUMMER = EINSAETZE.EINSATZNUMMER WHERE EINSAETZE.EROEFF BETWEEN '<%BEGINN%>' and '<%ENDE%>' AND SICHTUNGSKATEGORIE LIKE 'Ungesichtet'; {/sql} 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+Gesamt: {sql}SELECT COUNT(*) FROM PATIENTEN JOIN EINSAETZE ON PATIENTEN.EINSATZNUMMER = EINSAETZE.EINSATZNUMMER WHERE EINSAETZE.EROEFF BETWEEN '<%BEGINN%>' and '<%ENDE%>'; {/sql}</b></p>
+
+</body>
+
+</html>
