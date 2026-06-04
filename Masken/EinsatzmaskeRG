@@ -1,0 +1,94 @@
+{Standardoberfläche  Einsatzerfassung}
+
+{Den Tag wochentage_edit nicht löschen!!}
+<edit name="wochentage_edit" parent="einsatzmaske" left="0" top="0" width="89" height="21" readonly="1" visible="0" field="TERMIN_WOCHENTAGE">
+
+{Titelzeile}
+<label name="titellabel" caption="ENr. / Zeit" top="16" left="8" bold="1">
+<edit name="einsatznummer_edit" left="88" top="10" width="76" height="21" readonly="1" dbreadonly="1" hint="Einsatznummer intern" field="EINSATZNUMMER">
+<edit name="keznr_edit" left="165" top="10" width="136" height="21" readonly="1" dbreadonly="1" hint="Einsatznummer KEZ" field="EINSATZNR">
+<edit name="eroeffdatum_edit" left="302" top="10" width="118" height="21" readonly="1" dbreadonly="1" hint="Datum der Eröffnung" field="EROEFF">
+
+{Blocker Meldender}
+<bevel name="meldnenderbevel" raised="1" top="38" left="6" width="415" height="4">
+<label name="meldender_label" caption="&Mittleiler" top="50" left="8">
+<edit name="meldender_edit" left="88" top="46" width="165" height="21" hint="Meldender"  field="MELDENDER">
+<label name="telnrlabel" caption="Telefonnr." top="74" left="8">
+<edit name="telefonnummer_edit" left="88" top="70" width="140" height="21" hint="Telefonnummer des Meldenden"  field="MELDEWEG_TELEFON">
+<button nameadmin="anrufbutton" left="228" top="70" width="25" height="21" glyph="120" raised="1" onclick="params" params="call=telefonnummer_edit" caption="">
+
+{Block Status}
+
+<bevel name="trennbevel" raised="1" top="44" left="258" width="4" height="52">
+
+<label name="statuslabel" left="268" top="50" caption="Status" bold="1">
+<combobox name="status" left="325" top="46" width="95" height="21" dropdownlist="1" default="Erfasst" hint="Status des Einsatzes" field="STATUS" newitem1="Erfasst" newitem2="Disponiert" newitem3="Alarmiert" newitem4="Unwetter" newitem5="Termin" newitem6="Beendet" newitem7="Geschlossen">
+<label name="freilabel" left="268" top="74" caption="Anfahrt" bold="1">
+<checkbox name="sosi_cb" caption="SoSi" left="325" top="74" height="17" field="SONDERSIGNAL" bold="1" tabstop="0">
+
+<edit name="eart_edit" left="375" top="72" width="25" height="21" hint="Einsatzart" bold="1" uppercase="0" field="EINSATZART" params="suchen_einsatzart">
+  <label name="eartlabel" left="405" top="74" caption="EA" bold="1">
+
+{Bereich Einsatzstelle}
+
+<bevel name="estellebevel" raised="1" top="99" left="6" width="415" height="4">
+<label name="strasselabel" left="8" top="110" caption="Straße/Nr." bold="1" color="14342874" fontcolor="255">
+<edit name="strasse_edit" left="88" top="106" width="234" height="21" hint="Straße der Einsatzstelle" params="suchen_strasse;strasse_edit;ort_edit;ortsteil_edit;plz_edit;nil" field="STRASSE">
+<edit name="hausnummer_edit" left="323" top="106" width="63" height="21" hint="Hausnummer / Suche nach Objekt an Hand der Hausnummer" params="suchen_hausnummer_objekt;objekt_edit;strasse_edit;hausnummer_edit;ort_edit;ortsteil_edit;plz_edit;nil;nil" field="HAUSNUMMER">
+<button name="estellestr_btn" top="106" left="388" width="32" height="22" caption="Info" raised="1"  onclick="params" params="strasse;ort_edit;ortsteil_edit;strasse_edit" color="16777215">
+
+<label name="Objektlabel" left="8" top="134" caption="Objekt" bold="1">
+<edit name="objekt_edit" left="88" top="130" width="234" height="21" hint="Objektname der Einsatzstelle" params="suchen_objekt;objekt_edit;strasse_edit;hausnummer_edit;ort_edit;ortsteil_edit;plz_edit;nil;nil" field="OBJEKTNAME">
+<edit name="station_edit" left="323" top="130" width="63" height="21" hint="Zusatz zum Objekt (z.B. Station)" field="STATION">
+<button name="estelleobj_btn" top="130" left="388" width="32" height="22" caption="Info" raised="1"  onclick="params" params="objekt;ort_edit;ortsteil_edit;objekt_edit" color="16777215">
+
+
+<label name="ortlabel" caption="PLZ / Ort" bold="1" top="158" left="8">
+<edit name="plz_edit" left="88" top="154" height="21" width="40" field="PLZ" maxlength="5" hint="Postleitzahl">
+<edit name="ortsteil_edit" bold="1" left="129" top="154" width="173" height="21" hint="Ortsteil" field="ORTSTEIL">
+<edit name="ort_edit" bold="1" left="303" top="154" width="117" height="21" hint="Ort" field="ORT">
+
+{Meldung}
+<bevel name="meldungbevel" raised="1" top="180" left="6" width="415" height="4">
+<label name="stichwortlabel" caption="Schlag&w." bold="1" top="192" left="8" color="14342874" fontcolor="255">
+<edit name="schlagwort_edit" bold="1" left="88" top="188" height="21" width="270" field="SCHLAGWORT" default="" bold="1"  params="suchen_meldebild;schlagwort_edit;eart_edit;nil;nil;prio_edit;nil;stw1_edit;stichwort_edit;stw3_edit;stw4_edit">
+<label name="priolabel" caption="Prio."  top="192" left="364">
+<edit name="prio_edit" left="397" top="188" width="23" height="21" hint="Priorität des Einsatzes" bold="1" field="PRIORITAET" default="0">
+
+
+<label name="stwb_label" " caption="STW B" top="216" left="8" bold="1">
+<edit name="stw1_edit" left="88" top="212" height="21" width="130" field="EINSATZSTICHWORT1" readonly="1" bold="1"  tabstop="0">
+<label name="stwt_label"  caption="STW T" top="216" left="230" bold="1">
+<edit name="stw3_edit" left="290" top="212" height="21" width="130" field="EINSATZSTICHWORT3" readonly="1" bold="1"  tabstop="0">
+
+<label name="stwr_label"  caption="STW R" top="240" left="8" bold="1">
+<edit name="stichwort_edit" left="88" top="236" width="130" height="21" hint="Einsatzstichwort" uppercase="0" bold="1"  field="STICHWORT">
+<label name="stws_label" caption="STW S" top="240" left="230" bold="1">
+<edit name="stw4_edit" left="290" top="236" height="21" width="130" field="EINSATZSTICHWORT4" readonly="1" bold="1"  tabstop="0">
+
+<bevel name="freitextbevel" raised="1" top="262" left="6" width="415" height="4">
+<label name="freitext_label"  caption="Freitext" top="278" left="8" bold="1">
+<memo name="freitext_memo" left="88" height="38" top="274" width="334" field="FREITEXT" hint="Freitext von ILS">
+
+<bevel name="untenbevel" raised="1" top="318" left="6" width="415" height="4">
+
+
+{Bereich Maßnahmen}
+
+<panel name="masnpanel" left="4" top="328" width="421" height="37" raised="0">
+
+<label name="masnlabel" parent="masnpanel" left="4" top="12" caption="Maßnahme" bold="1">
+<edit name="masn_edit" parent="masnpanel" left="84" top="8" width="331" height="21" params="savemaßnahme">
+
+{Bereich Termin}
+
+<panel name="termin_panel" left="4" top="328" width="421" height="37" raised="0">
+
+<label name="terminlabel" parent="termin_panel" left="4" top="12" caption="Dat./Zt./Vl./D.">
+<edit name="vdat_edit" parent="termin_panel" left="84" top="8" width="77" height="21" field="TERMIN_DATUM" params="date" hint="Datum des Termineinsatzes">
+<edit name="vtime_edit" parent="termin_panel" left="160" top="8" width="57" height="21" field="TERMIN_ZEIT" params="time" hint="Uhrzeit des Termineinsatzes">
+<edit name="vlauf_edit" parent="termin_panel" left="216" top="8" width="33" height="21" field="TERMIN_VORLAUF" default="0" hint="Vorlaufzeit (Minuten)">
+<edit name="dauer_edit" parent="termin_panel" left="248" top="8" width="33" height="21" field="TERMIN_DAUER" default="0" hint="Geplante Einsatzdauer (Minuten)">
+<label name="emlabel" parent="termin_panel" left="288" top="12" caption="EM">
+<edit name="vordispo_edit" parent="termin_panel" left="312" top="8" width="81" height="21" field="VORDISPONIERT" params="emauswahl" hint="Geplantes Einsatzmittel">
+<button name="dauerauftragbutton" parent="termin_panel" left="394" top="8" width="25" height="21" glyph="27" raised="1" popup="wochentag_popup" caption="">
