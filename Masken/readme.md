@@ -1,7 +1,7 @@
 ## Eisatzmaske RG
 > This section covers the general mask in EDP
 ### Preview
-![Einsatzmaske](Screenshots/EinsatzmaskeRG.png)
+![Einsatzmaske](Screenshots/EinsätzeRG.png)
 
 ## Patienten RG
 > This section covers the general patient mask in EDP
