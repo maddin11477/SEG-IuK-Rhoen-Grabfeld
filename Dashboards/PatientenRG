@@ -1,0 +1,154 @@
+<div class="card-body px-0 pt-1">
+    <table class="table table-border table-striped">
+        <tr class="border-top">
+            <th><span class="ms-4" style="width: 40%">Status</span></th>
+            <th class="text-center bg-danger-subtle" style="width: 10%">SK I</th>
+            <th class="text-center bg-warning-subtle" style="width: 10%">SK II</th>
+            <th class="text-center bg-success-subtle" style="width: 10%">SK III</th>
+            <th class="text-center bg-black text-white" style="width: 10%">Ex</th>
+            <th class="text-center bg-dark-subtle" style="width: 10%">Ungesichtet</th>
+            <th class="text-center bg-dark-subtle" style="width: 10%">Betroffen</th>
+        </tr>
+        <tr>
+            <td>
+                <span class="ms-2 card-text fw-semibold"><img src="/EDPTZ_PHBlcnNvbnRyYW5zcG9ydCBzY2hhZGVuPSJwdHJhbnNwb3J0IiBmZ2NvbG9yPSIjMDAwMDAwIiBiZ2NvbG9yPSIjZmZmZmZmIiBmb250c2l6ZT0iNTUiPg==" style="max-height: 44px"> Offen</span>
+            </td>
+            <sql query="SELECT 
+                         COALESCE(COUNT(p.id), 0) AS COUNT from patienten p inner join einsaetze e on p.einsatznummer = e.einsatznummer
+                         WHERE e.`STATUS` IN ('Erfasst', 'Disponiert', 'Alarmiert', 'Beendet') and p.sichtungskategorie='Rot' AND (P.Zielort is null or p.zielort='')">
+                <td class="text-center bg-danger-subtle">
+                    <span class="fs-5 fw-semibold">%COUNT%</span>
+                </td>
+            </sql>
+            <sql query="SELECT 
+                         COALESCE(COUNT(p.id), 0) AS COUNT from patienten p inner join einsaetze e on p.einsatznummer = e.einsatznummer
+                         WHERE e.`STATUS` IN ('Erfasst', 'Disponiert', 'Alarmiert', 'Beendet') and p.sichtungskategorie='Gelb' AND (P.Zielort is null or p.zielort='')">
+                <td class="text-center bg-warning-subtle">
+                    <span class="fs-5 fw-semibold">%COUNT%</span>
+                </td>
+            </sql>
+            <sql query="SELECT 
+                         COALESCE(COUNT(p.id), 0) AS COUNT from patienten p inner join einsaetze e on p.einsatznummer = e.einsatznummer
+                         WHERE e.`STATUS` IN ('Erfasst', 'Disponiert', 'Alarmiert', 'Beendet') and p.sichtungskategorie='Grün' AND (P.Zielort is null or p.zielort='')">
+                <td class="text-center bg-success-subtle">
+                    <span class="fs-5 fw-semibold">%COUNT%</span>
+                </td>
+            </sql>
+            <sql query="SELECT 
+                         COALESCE(COUNT(p.id), 0) AS COUNT from patienten p inner join einsaetze e on p.einsatznummer = e.einsatznummer
+                         WHERE e.`STATUS` IN ('Erfasst', 'Disponiert', 'Alarmiert', 'Beendet') and p.sichtungskategorie='Tot' AND (P.Zielort is null or p.zielort='')">
+                <td class="text-center bg-black text-white">
+                    <span class="fs-5 fw-semibold">%COUNT%</span>
+                </td>
+            </sql>
+            <sql query="SELECT 
+                         COALESCE(COUNT(p.id), 0) AS COUNT from patienten p inner join einsaetze e on p.einsatznummer = e.einsatznummer
+                         WHERE e.`STATUS` IN ('Erfasst', 'Disponiert', 'Alarmiert', 'Beendet') and p.sichtungskategorie='Ungesichtet' AND (P.Zielort is null or p.zielort='')">
+                <td class="text-center bg-dark-subtle">
+                    <span class="fs-5 fw-semibold">%COUNT%</span>
+                </td>
+            </sql>
+            <sql query="SELECT 
+                         COALESCE(COUNT(p.id), 0) AS COUNT from patienten p inner join einsaetze e on p.einsatznummer = e.einsatznummer
+                         WHERE e.`STATUS` IN ('Erfasst', 'Disponiert', 'Alarmiert', 'Beendet') and p.sichtungskategorie='Unverletzt' AND (P.Zielort is null or p.zielort='')">
+                <td class="text-center bg-dark-subtle">
+                    <span class="fs-5 fw-semibold">%COUNT%</span>
+                </td>
+            </sql>
+        </tr>
+        <tr>
+            <td>
+                <span class="ms-2 card-text fw-semibold"><img src="/EDPTZ_PHBlcnNvbnRyYW5zcG9ydCBzY2hhZGVuPSJwdHJhbnNwb3J0aWVydCIgZmdjb2xvcj0iIzAwMDAwMCIgYmdjb2xvcj0iI2ZmZmZmZiIgZm9udHNpemU9IjU1Ij4=" style="max-height: 44px"> Transportiert</span>
+            </td>
+            <sql query="SELECT 
+                         COALESCE(COUNT(p.id), 0) AS COUNT from patienten p inner join einsaetze e on p.einsatznummer = e.einsatznummer
+                         WHERE e.`STATUS` IN ('Erfasst', 'Disponiert', 'Alarmiert', 'Beendet') and p.sichtungskategorie='Rot' AND (P.Zielort is not null and p.zielort<>'')">
+                <td class="text-center bg-danger-subtle">
+                    <span class="fs-5 fw-semibold">%COUNT%</span>
+                </td>
+            </sql>
+            <sql query="SELECT 
+                         COALESCE(COUNT(p.id), 0) AS COUNT from patienten p inner join einsaetze e on p.einsatznummer = e.einsatznummer
+                         WHERE e.`STATUS` IN ('Erfasst', 'Disponiert', 'Alarmiert', 'Beendet') and p.sichtungskategorie='Gelb' AND (P.Zielort is not null and p.zielort<>'')">
+                <td class="text-center bg-warning-subtle">
+                    <span class="fs-5 fw-semibold">%COUNT%</span>
+                </td>
+            </sql>
+            <sql query="SELECT 
+                         COALESCE(COUNT(p.id), 0) AS COUNT from patienten p inner join einsaetze e on p.einsatznummer = e.einsatznummer
+                         WHERE e.`STATUS` IN ('Erfasst', 'Disponiert', 'Alarmiert', 'Beendet') and p.sichtungskategorie='Grün' AND (P.Zielort is not null and p.zielort<>'')">
+                <td class="text-center bg-success-subtle">
+                    <span class="fs-5 fw-semibold">%COUNT%</span>
+                </td>
+            </sql>
+            <sql query="SELECT 
+                         COALESCE(COUNT(p.id), 0) AS COUNT from patienten p inner join einsaetze e on p.einsatznummer = e.einsatznummer
+                         WHERE e.`STATUS` IN ('Erfasst', 'Disponiert', 'Alarmiert', 'Beendet') and p.sichtungskategorie='Tot' AND (P.Zielort is not null and p.zielort<>'')">
+                <td class="text-center bg-black text-white">
+                    <span class="fs-5 fw-semibold">%COUNT%</span>
+                </td>
+            </sql>
+            <sql query="SELECT 
+                         COALESCE(COUNT(p.id), 0) AS COUNT from patienten p inner join einsaetze e on p.einsatznummer = e.einsatznummer
+                         WHERE e.`STATUS` IN ('Erfasst', 'Disponiert', 'Alarmiert', 'Beendet') and p.sichtungskategorie='Ungesichtet' AND (P.Zielort is not null and p.zielort<>'')">
+                <td class="text-center bg-dark-subtle">
+                    <span class="fs-5 fw-semibold">%COUNT%</span>
+                </td>
+            </sql>
+            <sql query="SELECT 
+                         COALESCE(COUNT(p.id), 0) AS COUNT from patienten p inner join einsaetze e on p.einsatznummer = e.einsatznummer
+                         WHERE e.`STATUS` IN ('Erfasst', 'Disponiert', 'Alarmiert', 'Beendet') and p.sichtungskategorie='Unverletzt' AND (P.Zielort is not null and p.zielort<>'')">
+                <td class="text-center bg-dark-subtle">
+                    <span class="fs-5 fw-semibold">%COUNT%</span>
+                </td>
+            </sql>
+        </tr>
+        <tr>
+            <td>
+                <span class="ms-2 card-text fw-semibold"><img src="/EDPTZ_PHBlcnNvbiBzY2hhZGVuPSJwZXJzb252ZXJsZXR6dCIgZmdjb2xvcj0iIzAwMDAwMCIgYmdjb2xvcj0iI2ZmZmZmZiIgZm9udHNpemU9IjU1Ij4=" style="max-height: 44px"> Gesamt</span>
+            </td>
+            <sql query="SELECT 
+                         COALESCE(COUNT(p.id), 0) AS COUNT from patienten p inner join einsaetze e on p.einsatznummer = e.einsatznummer
+                         WHERE e.`STATUS` IN ('Erfasst', 'Disponiert', 'Alarmiert', 'Beendet') and p.sichtungskategorie='Rot'">
+                <td class="text-center bg-danger-subtle">
+                    <span class="fs-5 fw-semibold">%COUNT%</span>
+                </td>
+            </sql>
+            <sql query="SELECT 
+                         COALESCE(COUNT(p.id), 0) AS COUNT from patienten p inner join einsaetze e on p.einsatznummer = e.einsatznummer
+                         WHERE e.`STATUS` IN ('Erfasst', 'Disponiert', 'Alarmiert', 'Beendet') and p.sichtungskategorie='Gelb'">
+                <td class="text-center bg-warning-subtle">
+                    <span class="fs-5 fw-semibold">%COUNT%</span>
+                </td>
+            </sql>
+            <sql query="SELECT 
+                         COALESCE(COUNT(p.id), 0) AS COUNT from patienten p inner join einsaetze e on p.einsatznummer = e.einsatznummer
+                         WHERE e.`STATUS` IN ('Erfasst', 'Disponiert', 'Alarmiert', 'Beendet') and p.sichtungskategorie='Grün'">
+                <td class="text-center bg-success-subtle">
+                    <span class="fs-5 fw-semibold">%COUNT%</span>
+                </td>
+            </sql>
+            <sql query="SELECT 
+                         COALESCE(COUNT(p.id), 0) AS COUNT from patienten p inner join einsaetze e on p.einsatznummer = e.einsatznummer
+                         WHERE e.`STATUS` IN ('Erfasst', 'Disponiert', 'Alarmiert', 'Beendet') and p.sichtungskategorie='Tot'">
+                <td class="text-center bg-black text-white">
+                    <span class="fs-5 fw-semibold">%COUNT%</span>
+                </td>
+            </sql>
+            <sql query="SELECT 
+                         COALESCE(COUNT(p.id), 0) AS COUNT from patienten p inner join einsaetze e on p.einsatznummer = e.einsatznummer
+                         WHERE e.`STATUS` IN ('Erfasst', 'Disponiert', 'Alarmiert', 'Beendet') and p.sichtungskategorie='Ungesichtet'">
+                <td class="text-center bg-dark-subtle">
+                    <span class="fs-5 fw-semibold">%COUNT%</span>
+                </td>
+            </sql>
+            <sql query="SELECT 
+                         COALESCE(COUNT(p.id), 0) AS COUNT from patienten p inner join einsaetze e on p.einsatznummer = e.einsatznummer
+                         WHERE e.`STATUS` IN ('Erfasst', 'Disponiert', 'Alarmiert', 'Beendet') and p.sichtungskategorie='Unverletzt'">
+                <td class="text-center bg-dark-subtle">
+                    <span class="fs-5 fw-semibold">%COUNT%</span>
+                </td>
+            </sql>
+        </tr>
+    </table>
+</div>
