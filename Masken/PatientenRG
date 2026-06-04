@@ -1,0 +1,79 @@
+{Patienteneingabe RG}
+
+{Angabe Höhe des Fensters}
+<maskenheight="405">
+
+
+{Block Nummern}
+<bevel name="bevelNummern" left="1" top="1" width="540" height="47">
+
+<label name="lbluhsvaknr" caption="EDP Nr. | VAK Nr." bold="1" top="7" left="13">
+<label name="lbluhsname" caption="<-- UHS Name" bold="0" top="7" left="445">
+<edit name="uhsnr" hint="Patientennummer" field="UHS_PATNUMMER" left="120" top="5" text="" width="77" height="18" Readonly="1" Dbreadonly="1">
+<edit name="vaknr" hint="VAK Nummer" field="PATNUMMER" left="198" top="5" text="" width="77" height="18">
+<edit name="uhsname" hint="UHS Name" field="UHS_NAME" left="276" top="5" text="" width="155" height="18">
+<label name="lblILSnr" caption="ILS Nr. | Sichtung" bold="0" top="28" left="13">
+<edit name="ilsnr" hint="Nummer der ILS" field="ILS_PATNUMMER" left="120" top="26" text="" width="155" height="18">
+<combobox name="cb_kategorie" hint="Sichtungskategorie" field="SICHTUNGSKATEGORIE" left="276" top="26" text="" width="155" height="19" dropdownlist="1" newitem1="Rot" newitem2="Gelb" newitem3="Grün" newitem4="Unverletzt" newitem5="Ungesichtet" default="Ungesichtet">
+
+{Block Patienten persönliche Daten}height="18"
+<bevel name="bevelDaten" left="1" top="48" width="540" height="68">
+
+<label name="lblname" caption="Name | Vorname" bold="1" top="54" left="13">
+<edit name="name" hint="Name" field="NAME" left="120" top="52" text="" width="155" height="18">
+<edit name="vorname" hint="Vorname" field="VORNAME" left="276" top="52" text="" width="155" height="18">
+<label name="lblgebtalter" caption="Geb. Dat. | Alter" bold="0" top="75" left="13">
+<edit name="gebdatum" hint="Geburtsdatum" field="GEBDATUM" left="120" top="73" text="" width="155" height="18" params="date">
+<edit name="alter" hint="Alter" field="PAT_ALTER" left="276" top="73" text="" width="37" height="18">
+<label name="lblgeschelcht" caption="Geschlecht" bold="0" top="96" left="13">
+<combobox name="cb_geschlecht" hint="Geschlecht" field="GESCHLECHT" left="120" top="94" text="" width="155" height="19" dropdownlist="1" newitem1="männlich" newitem2="weiblich" newitem3="unbekannt" default="unbekannt">
+<button name="btn_m" left="276" top="94" width="37" height="19" caption="m" onclick="params" params="setvalue;cb_geschlecht;männlich">
+<button name="btn_w" left="314" top="94" width="37" height="19" caption="w" onclick="params" params="setvalue;cb_geschlecht;weiblich">
+<button name="btn_u" left="352" top="94" width="37" height="19" caption="u" onclick="params" params="setvalue;cb_geschlecht;unbekannt">
+
+{Block ZusatzInfos persönliche Daten}
+<checkbox name="cb_kind" left="450" top="73" width="90" height="18" caption="Kind" field="Ist_Kind">
+
+{Block Verletzungen}
+<bevel name="bevelVerletzung" left="1" top="117" width="540" height="109">
+
+<label name="lblDiagnose" caption="Diagnose" top="123" left="13" bold="1">
+<memo name="memo_diagnose" hint="Diagnose" field="VERLETZUNG" left="120" top="121" text="" width="328" height="80">
+<label name="lblAuffindeort" caption="Auffindeort" top="202" left="13" bold="0">
+<edit name="edit_auffindeort" hint="Auffindeort" field="AUFFINDEORT" left="120" top="204" text="" width="311" height="18">
+
+{Block ZusatzInfos Verletzung}
+<checkbox name="cb_sht" left="450" top="123" width="90" height="18" caption="SHT" field="IST_SHT">
+<checkbox name="cb_brand" left="450" top="143" width="90" height="18" caption="Brand" field="IST_BRAND">
+<checkbox name="cb_kontaminiert" left="450" top="163" width="90" height="18" caption="kontaminiert" field="IST_KONTAMINIERT">
+<checkbox name="cb_instabil" left="450" top="183" width="90" height="18" caption="instabil" field="IST_INSTABIL">
+<checkbox name="cb_isoliert" left="450" top="203" width="90" height="18" caption="isoliert" field="ISOLIERT">
+
+{Block Transport}
+<bevel name="bevelTrasnport" left="1" top="227" width="540" height="89">
+
+<label name="lbleinheit" caption="EM | NA" top="233" left="13" bold="1">
+<edit name="edit_em1" hint="Rettungsmittel" field="EM" left="120" top="231" text="" width="155" height="18" params="emauswahl">
+<edit name="edit_em2" hint="Notarzt" field="EM2" left="276" top="231" text="" width="155" height="18" params="emauswahl">
+<label name="lbl_ziel" caption="Zielort" bold="0" top="254" left="13">
+<edit name="objekt_edit" hint="Zielort" field="ZIELOBJEKT" left="120" top="252" text="" width="290" height="18" params="suchen_objekt;objekt_edit;nil;nil;ort_edit;ortsteil_edit;nil;nil;nil">
+<button name="btnObject" left="411" top="252" height="19" width="20" caption="..." Glyph="57" onclick="params" params="objekt;ort_edit;ortsteil_edit;objekt_edit;strasse_edit;hausnummer_edit">
+<label name="lblZiel" caption="Zielort | Ortsteil" top="275" left="13" bold="1">
+<edit name="ort_edit" hint="Ort" field="ZIELORT" left="120" top="273" text="" width="155" height="18">
+<edit name="ortsteil_edit" hint="Ortsteil" field="ZIELORTSTEIL" left="276" top="273" text="" width="155" height="18">
+<label name="lbl_Transportzeit" caption="Transportzeit" bold="0" top="296" left="13">
+<edit name="edit_Transportzeit" hint="Transportzeit" field="TRANSPORTZEIT" left="120" top="294" text="" width="134" height="18">
+<checkbox name="cb_Entlassen" left="278" top="295" width="90" height="18" caption="entlassen" field="IST_ENTLASSEN">
+<button name="btnTransportzeit" left="255" top="294" height="19" width="20" caption="..." onclick="params" Glyph="88" params="setvalue;edit_Transportzeit;current_timestamp">
+
+{Block ZusatzInfos Transport}
+<checkbox name="cb_NApflichtig" left="450" top="231" width="90" height="18" caption="NA pflichtig" field="NOTARZT">
+<checkbox name="cb_Schockraum" left="450" top="251" width="90" height="18" caption="Schockraum" field="IST_SCHOCKRAUM">
+<checkbox name="cb_Beatment" left="450" top="271" width="90" height="18" caption="beatmet" field="IST_BEATMET">
+
+{Block Freitext}
+<bevel name="bevelFreitext" left="1" top="317" width="540" height="88">
+
+<label name="lblAnmerkung" caption="Anmerkung |" top="323" left="13" bold="1">
+<label name="lblMassnahme" caption="Maßnahme" top="337" left="13" bold="1">
+<memo name="memo_Anmerkung" hint="Anmerkung" field="KOMMENTAR" left="120" top="321" text="" width="328" height="80">
